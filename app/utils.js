@@ -229,7 +229,7 @@ function formatCurrencyAmountWithForcedDecimalPlaces(amount, formatType, forcedD
 	let currencyType = global.currencyTypes[formatType];
 
 	if (currencyType == null) {
-		throw `Unknown currency type: ${formatType}`;
+		throw `Unknown currency type: ${amount}`;
 	}
 
 	let dec = new Decimal(amount);
@@ -1486,20 +1486,17 @@ function tryParseAddress(address) {
 
 	let parsedAddress = null;
 
-	let b58prefix = (global.activeBlockchain == "main" ? /^[13].*$/ : /^[2mn].*$/);
-	if (address.match(b58prefix)) {
-		try {
-			parsedAddress = bitcoinjs.address.fromBase58Check(address);
-			parsedAddress.hash = parsedAddress.hash.toString("hex");
+	try {
+		parsedAddress = bitcoinjs.address.fromBase58Check(address);
+		parsedAddress.hash = parsedAddress.hash.toString("hex");
 
-			return {
-				encoding: "base58",
-				parsedAddress: parsedAddress
-			};
+		return {
+			encoding: "base58",
+			parsedAddress: parsedAddress
+		};
 
-		} catch (err) {
-			base58Error = err;
-		}
+	} catch (err) {
+		base58Error = err;
 	}
 
 	try {

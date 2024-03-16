@@ -311,10 +311,10 @@ block endOfBody
 				$("#mem-usage").html(`<span>${result[0]} <small>${result[1].abbreviation}B</small></span>`);
 			});
 
-			updateCurrencyValue($("#total-fees"), summary.totalFees);
-			updateCurrencyValue($("#avg-fee"), summary.averageFee);
+			//updateCurrencyValue($("#total-fees"), summary.totalFees);
+			//updateCurrencyValue($("#avg-fee"), summary.averageFee);
 
-			updateFeeRateValue($("#avg-fee-rate"), summary.averageFeePerByte, 2, false);
+			//updateFeeRateValue($("#avg-fee-rate"), summary.averageFeePerByte, 2, false);
 
 
 			//$("#summary-json").text(JSON.stringify(summary, null, 4));
@@ -510,10 +510,10 @@ block endOfBody
 				row.find(".data-fee-rate").text("-");
 
 				if (item.count > 0) {
-					updateCurrencyValue(row.find(".data-total-fees"), item.totalFees);
-					updateCurrencyValue(row.find(".data-avg-fee"), item.totalFees / item.count);
+					//updateCurrencyValue(row.find(".data-total-fees"), item.totalFees);
+					//updateCurrencyValue(row.find(".data-avg-fee"), item.totalFees / item.count);
 
-					updateFeeRateValue(row.find(".data-fee-rate"), item.totalFees / item.totalBytes, 2, false);
+					//updateFeeRateValue(row.find(".data-fee-rate"), item.totalFees / item.totalBytes, 2, false);
 				}
 
 				row.show();

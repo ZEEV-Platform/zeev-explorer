@@ -19,7 +19,7 @@ const coins = require("./../app/coins.js");
 const config = require("./../app/config.js");
 const coreApi = require("./../app/api/coreApi.js");
 const addressApi = require("./../app/api/addressApi.js");
-const btcQuotes = require("./../app/coins/btcQuotes.js");
+const btcQuotes = require("./../app/coins/zeevQuotes.js");
 
 
 

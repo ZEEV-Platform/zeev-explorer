@@ -24,7 +24,7 @@ const addressApi = require("./../app/api/addressApi.js");
 const xyzpubApi = require("./../app/api/xyzpubApi.js");
 const rpcApi = require("./../app/api/rpcApi.js");
 const apiDocs = require("./../docs/api.js");
-const btcQuotes = require("./../app/coins/btcQuotes.js");
+const btcQuotes = require("./../app/coins/zeevQuotes.js");
 
 
 

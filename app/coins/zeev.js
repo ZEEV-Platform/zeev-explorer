@@ -3,9 +3,9 @@
 const Decimal = require("decimal.js");
 const Decimal8 = Decimal.clone({ precision:8, rounding:8 });
 
-const btcFun = require("./btcFun.js");
+const zeevFun = require("./zeevFun.js");
 
-const blockRewardEras = [ new Decimal8(50) ];
+const blockRewardEras = [ new Decimal8(950.5) ];
 for (let i = 1; i < 34; i++) {
 	let previous = blockRewardEras[i - 1];
 	blockRewardEras.push(new Decimal8(previous).dividedBy(2));
@@ -14,15 +14,15 @@ for (let i = 1; i < 34; i++) {
 const currencyUnits = [
 	{
 		type:"native",
-		name:"BTC",
+		name:"ZEEV",
 		multiplier:1,
 		default:true,
-		values:["", "btc", "BTC"],
+		values:["", "zeev", "ZEEV"],
 		decimalPlaces:8
 	},
 	{
 		type:"native",
-		name:"mBTC",
+		name:"mZEEV",
 		multiplier:1000,
 		values:["mbtc"],
 		decimalPlaces:5
@@ -60,19 +60,19 @@ const currencyUnits = [
 ];
 
 module.exports = {
-	name:"Bitcoin",
-	ticker:"BTC",
+	name:"Zeevcoin",
+	ticker:"ZEEV",
 	logoUrlsByNetwork:{
-		"main":"./img/BTC-network-mainnet/logo.svg",
-		"test":"./img/BTC-network-testnet/logo.svg",
-		"regtest":"./img/BTC-network-regtest/logo.svg",
-		"signet":"./img/BTC-network-signet/logo.svg"
+		"main":"./img/ZEEV-network-mainnet/logo.png",
+		"test":"./img/ZEEV-network-testnet/logo.png",
+		"regtest":"./img/ZEEV-network-regtest/logo.png",
+		"signet":"./img/ZEEV-network-signet/logo.png"
 	},
 	coinIconUrlsByNetwork:{
-		"main":"./img/BTC-network-mainnet/coin-icon.svg",
-		"test":"./img/BTC-network-testnet/coin-icon.svg",
-		"signet":"./img/BTC-network-signet/coin-icon.svg",
-		"regtest":"./img/BTC-network-regtest/coin-icon.svg"
+		"main":"./img/ZEEV-network-mainnet/coin-icon.svg",
+		"test":"./img/ZEEV-network-testnet/coin-icon.svg",
+		"signet":"./img/ZEEV-network-signet/coin-icon.svg",
+		"regtest":"./img/ZEEV-network-regtest/coin-icon.svg"
 	},
 	coinColorsByNetwork: {
 		"main": "#F7931A",
@@ -80,11 +80,17 @@ module.exports = {
 		"signet": "#af008c",
 		"regtest": "#777"
 	},
+	siteLogoTitlesByNetwork: {
+		"main":"ZEEVCOIN : Explorer",
+		"test":"ZEEVCOIN : TestNet Explorer",
+		"regtest":"ZEEVCOIN : RegNet Explorer",
+		"signet":"ZEEVCOIN : SigNet Explorer",
+	},
 	siteTitlesByNetwork: {
-		"main":"Bitcoin Explorer",
-		"test":"Testnet Explorer",
-		"regtest":"Regtest Explorer",
-		"signet":"Signet Explorer",
+		"main":"Explorer",
+		"test":"TestNet Explorer",
+		"regtest":"RegNet Explorer",
+		"signet":"SigNet Explorer",
 	},
 	demoSiteUrlsByNetwork: {
 		"main": "https://bitcoinexplorer.org",
@@ -106,15 +112,15 @@ module.exports = {
 	maxBlockSize: 1000000,
 	minTxBytes: 166, // ref: https://en.bitcoin.it/wiki/Maximum_transaction_rate
 	minTxWeight: 166 * 4, // hack
-	difficultyAdjustmentBlockCount: 2016,
+	difficultyAdjustmentBlockCount: 1,
 	maxSupplyByNetwork: {
-		"main": new Decimal(20999817.31308491), // ref: https://bitcoin.stackexchange.com/a/38998
-		"test": new Decimal(21000000),
-		"regtest": new Decimal(21000000),
-		"signet": new Decimal(21000000)
+		"main": new Decimal(1000000000), // ref: https://bitcoin.stackexchange.com/a/38998
+		"test": new Decimal(1000000000),
+		"regtest": new Decimal(1000000000),
+		"signet": new Decimal(1000000000)
 	},
-	targetBlockTimeSeconds: 600,
-	targetBlockTimeMinutes: 10,
+	targetBlockTimeSeconds: 30,
+	targetBlockTimeMinutes: 0.5,
 	currencyUnits:currencyUnits,
 	currencyUnitsByName:{"BTC":currencyUnits[0], "mBTC":currencyUnits[1], "bits":currencyUnits[2], "sat":currencyUnits[3]},
 	baseCurrencyUnit:currencyUnits[3],
@@ -122,10 +128,10 @@ module.exports = {
 	feeSatoshiPerByteBucketMaxima: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 50, 75, 100, 150],
 	
 	halvingBlockIntervalsByNetwork: {
-		"main": 210000,
-		"test": 210000,
-		"regtest": 150,
-		"signet": 210000
+		"main": 26980,
+		"test": 26980,
+		"regtest": 26980,
+		"signet": 26980
 	},
 
 	terminalHalvingCountByNetwork: {
@@ -137,9 +143,9 @@ module.exports = {
 
 	// used for supply estimates that don't need full gettxoutset accuracy
 	coinSupplyCheckpointsByNetwork: {
-		"main": [ 675046, new Decimal(18656332.38) ],
-		"test": [ 1940614, new Decimal(20963051.112) ],
-		"signet": [ 29472, new Decimal(1473600) ],
+		"main": [ 0, new Decimal(0) ],
+		"test": [ 0, new Decimal(0) ],
+		"signet": [ 0, new Decimal(0) ],
 		"regtest": [ 0, new Decimal(0) ]
 	},
 
@@ -523,7 +529,7 @@ module.exports = {
 		}
 	},
 	genesisCoinbaseOutputAddressScripthash:"8b01df4e368ea28f8dc0423bcf7a4923e3a12d307c875e47a0cfbf90b5c39161",
-	historicalData: btcFun.items,
+	historicalData: zeevFun.items,
 	exchangeRateData:{
 		jsonUrl:"https://api.coindesk.com/v1/bpi/currentprice.json",
 		responseBodySelectorFunction:function(responseBody) {
@@ -563,7 +569,7 @@ module.exports = {
 		}
 	},
 	blockRewardFunction:function(blockHeight, chain) {
-		let halvingBlockInterval = (chain == "regtest" ? 150 : 210000);
+		let halvingBlockInterval = 26980;
 		let index = Math.floor(blockHeight / halvingBlockInterval);
 
 		return blockRewardEras[index];

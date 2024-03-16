@@ -1480,7 +1480,7 @@ function getMempoolTxSummaries(allTxids, statusId, statusFunc) {
 				const txid = txids[i];
 				const key = mempoolCacheKeyForTxid(txid);
 				txidKeysForCachePurge[key] = 1;
-
+				
 				if (mempoolTxSummaryCache[key]) {
 					const itemSummary = Object.assign({}, mempoolTxSummaryCache[key]);
 					itemSummary.key = key;
@@ -1491,8 +1491,12 @@ function getMempoolTxSummaries(allTxids, statusId, statusFunc) {
 					statusUpdate();
 
 				} else {
+					
+				
 					promises.push(new Promise(async (resolve, reject) => {
 						try {
+							
+						
 							const item = await getMempoolTxDetails(txid, false);
 							const itemSummary = {
 								f: btcToSat(item.entry.fees.modified),
@@ -1503,9 +1507,9 @@ function getMempoolTxSummaries(allTxids, statusId, statusFunc) {
 								a: item.entry.depends.map(x => mempoolCacheKeyForTxid(x)),
 
 								t: item.entry.time,
-								w: item.entry.weight ? item.entry.weight : item.entry.size * 4,
+								w: item.entry.weight ? item.entry.weight : item.entry.vsize * 4,
 							};
-
+						
 							mempoolTxSummaryCache[key] = itemSummary;
 
 							const itemSummaryWithKey = Object.assign({}, itemSummary);
@@ -1529,13 +1533,13 @@ function getMempoolTxSummaries(allTxids, statusId, statusFunc) {
 							resolve();
 						}
 					}));
+					
 				}
 			}
 
 
 			await Promise.all(promises);
-
-			
+								
 			// purge items from cache that are no longer present in mempool
 			let keysToDelete = [];
 			for (let key in mempoolTxSummaryCache) {
@@ -1589,6 +1593,7 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 				let fee = summary.f;
 				let size = summary.w / 4; // TOOD: hack
 				let feePerByte = summary.f / summary.w;
+				
 				let age = Date.now() / 1000 - summary.t;
 
 				if (fee > maxFee) {
@@ -1666,7 +1671,7 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 				});
 
 				if (i > 0 && i < bucketCount - 1) {
-					satoshiPerByteBucketLabels.push("[" + satoshiPerByteBucketMaxima[i - 1] + " - " + satoshiPerByteBucketMaxima[i] + ")");
+					satoshiPerByteBucketLabels.push("(" + satoshiPerByteBucketMaxima[i - 1] + " - " + satoshiPerByteBucketMaxima[i] + ")");
 				}
 			}
 
@@ -1745,7 +1750,6 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 				"highestFeeTxs": topfees.slice(0, oldestLargestCount)
 			};
 
-
 			for (let i = 0; i < oldestLargestCount; i++) {
 				let oldTx = summary.oldestTxs[i];
 				let largeTx = summary.largestTxs[i];
@@ -1821,6 +1825,7 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 			let topTargetPercent = 0.25;
 			let totWeight = 0;
 			let topIndex = -1;
+					
 			for (let i = satoshiPerByteBuckets.length - 1; i >= 0; i--) {
 				totWeight += satoshiPerByteBuckets[i].totalWeight;
 
@@ -1835,9 +1840,8 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 
 			if (topIndex < feeBucketMaxCount) {
 				summary.satoshiPerByteBucketLabels.push(topIndex + "+");
-			}
-
-			
+			} 
+				
 			if (topIndex < satoshiPerByteBuckets.length) {
 				satoshiPerByteBuckets[topIndex].buckets = 0;
 
@@ -1855,7 +1859,7 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 			}
 
 			summary["averageFee"] = summary["totalFees"] / summary["count"];
-			summary["averageFeePerByte"] = summary["totalFees"] / summary["totalBytes"];
+			summary["averageFeePerByte"] = Math.round(summary["totalFees"] * 100000000 / summary["totalBytes"]);
 
 			summary["satoshiPerByteBucketMaxima"] = satoshiPerByteBucketMaxima;
 			summary.satoshiPerByteBuckets = satoshiPerByteBuckets;
@@ -1867,10 +1871,8 @@ function buildMempoolSummary(statusId, ageBuckets, sizeBuckets, statusFunc) {
 				summary["satoshiPerByteBucketTotalFees"].push(summary["satoshiPerByteBuckets"][i]["totalFees"]);
 			}
 
-
 			// we're done, make sure statusFunc knows it
 			statusFunc({count: txSummaries.length, done: txSummaries.length});
-
 
 			resolve(summary);
 

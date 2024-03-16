@@ -392,7 +392,6 @@ function getMempoolTxDetails(txid, includeAncDec=true) {
 			mempoolDetails.entry = result;
 
 			resolve();
-
 		}).catch(function(err) {
 			reject(err);
 		});

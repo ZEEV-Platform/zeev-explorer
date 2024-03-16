@@ -1,8 +1,8 @@
 global.currencyTypes = {
-	"btc": {
-		id: "btc",
+	"zeev": {
+		id: "zeev",
 		type:"native",
-		name:"BTC",
+		name:"ZEEV",
 		multiplier:1,
 		default:true,
 		decimalPlaces:8
@@ -44,5 +44,6 @@ global.currencySymbols = {
 	"btc": "₿",
 	"usd": "$",
 	"eur": "€",
-	"gbp": "£"
+	"gbp": "£",
+	"zeev": "ZEEV"
 };

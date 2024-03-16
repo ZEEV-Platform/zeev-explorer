@@ -26,7 +26,7 @@ const config = require("./../app/config.js");
 const coreApi = require("./../app/api/coreApi.js");
 const addressApi = require("./../app/api/addressApi.js");
 const rpcApi = require("./../app/api/rpcApi.js");
-const btcQuotes = require("./../app/coins/btcQuotes.js");
+const btcQuotes = require("./../app/coins/zeevQuotes.js");
 
 const forceCsrf = csrfApi({ ignoreMethods: [] });
 
@@ -218,8 +218,6 @@ router.get("/", asyncHandler(async (req, res, next) => {
 			res.locals.difficultyPeriodFirstBlockHeader,
 			res.locals.latestBlocks[0],
 			res.locals.difficultyAdjustmentData);
-
-
 
 		res.locals.perfResults = perfResults;
 

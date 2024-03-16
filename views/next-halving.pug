@@ -23,15 +23,12 @@ block content
 
 				+summaryItem("Subsidy", "The new supply that will be created (and rewarded to the winning miner) for each new block during the next halving's era.")
 					- let subsidy = coinConfig.blockRewardFunction(nextHalvingData.nextHalvingBlock, global.activeBlockchain);
-					+valueDisplay(subsidy)
+					+valueDisplaySpecial(subsidy)
 
 		+contentSection("Timeline / Progress")
-			+summaryRow(2)
+			+summaryRow(1)
 				+summaryItem("Blocks Remaining")
 					| #{nextHalvingData.blocksUntilNextHalving.toLocaleString()}
-
-				+summaryItem("Date (Estimated)", "The date is estimated based on the number of blocks remaining and the current mining rate (up until the next difficulty adjustment).")
-					+timestamp(nextHalvingData.nextHalvingDate.getTime() / 1000)
 
 			- let progressPercent = new Decimal(nextHalvingData.halvingBlockInterval).minus(nextHalvingData.blocksUntilNextHalving).dividedBy(nextHalvingData.halvingBlockInterval).times(100);
 			.progress.mt-5(role="progressbar", aria-label="Next halving progress", aria-valuenow=progressPercent.toDP(0), aria-valuemin="0", aria-valuemax="100")

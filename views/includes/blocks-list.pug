@@ -156,30 +156,29 @@
 
 						if (blockstatsByHeight)
 							td.text-end.d-none.d-lg-table-cell
-								if (blockstatsByHeight[block.height])
-									- var satValue = new Decimal(blockstatsByHeight[block.height].total_out).plus(blockstatsByHeight[block.height].subsidy).plus(blockstatsByHeight[block.height].totalfee);
-									- var currencyValue = parseInt(satValue.dividedBy(coinConfig.baseCurrencyUnit.multiplier));
-									- var currencyValueDecimals = 0;
+								if (blockstatsByHeight[block.height].total_out)					
+									- var satValue = new Decimal(blockstatsByHeight[block.height].total_out);
+									- var currencyValue = satValue;	
 
-									if (userSettings.displayCurrency == "btc")
-										+valueDisplaySpecial(currencyValue, 0)
-
-									else
-										+valueDisplay(currencyValue)
+									+valueDisplaySpecial(currencyValue, 2)
 										
-
 									if (block.totalFees == null)
-										- block.totalFees = Decimal(blockstatsByHeight[block.height].totalfee).dividedBy(coinConfig.baseCurrencyUnit.multiplier)
+										var block.totalFees = Decimal(blockstatsByHeight[block.height].totalfee)
 
 								else
 									span 0
 
 						td.text-end.d-none.d-md-table-cell
 							if (blockstatsByHeight && blockstatsByHeight[block.height])
-								span.me-1 #{blockstatsByHeight[block.height].minfeerate},
-								span.me-1 #{blockstatsByHeight[block.height].avgfeerate},
-								span #{blockstatsByHeight[block.height].maxfeerate}
+								if (userSettings.displayCurrency == "zeev")
+									// +valueDisplaySpecial(blockstatsByHeight[block.height].minfeerate, 6)
+									span.me-1 
+									+valueDisplaySpecial(blockstatsByHeight[block.height].avgfeerate, 6)
+									// span +valueDisplaySpecial(blockstatsByHeight[block.height].maxfeerate, 6)
 
+								else
+									+valueDisplay(currencyValue)
+									
 							else if (block.totalFees && block.strippedsize)
 								- var currencyValue = new Decimal(block.totalFees).dividedBy(block.strippedsize).times(coinConfig.baseCurrencyUnit.multiplier).toDecimalPlaces(0);
 								if (currencyValue > 0)
@@ -197,15 +196,14 @@
 								span.border-dotted(title=`Value: ${feeEstimateVal}`, data-bs-toggle="tooltip") #{currencyValue}
 
 						td.text-end.d-none.d-lg-table-cell
-							if (block.totalFees)
-								- var currencyValue = new Decimal(block.totalFees);
-								- var currencyValueDecimals = 3;
+							if (blockstatsByHeight && blockstatsByHeight[block.height])														
+								- var currencyValue = new Decimal(blockstatsByHeight[block.height].totalfee);
 
-								if (userSettings.displayCurrency == "btc")
-									+valueDisplaySpecial(block.totalFees, 4)
+								if (userSettings.displayCurrency == "zeev")
+									+valueDisplaySpecial(currencyValue, 6)
 
 								else
-									+valueDisplay(block.totalFees)
+									+valueDisplay(currencyValue)
 
 							else
 								span(title="This data is unavailable due to blockchain pruning", data-bs-toggle="tooltip")

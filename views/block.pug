@@ -93,8 +93,7 @@ block content
 						if (result.blockstats)
 							+summaryItem("Total Output", "Total value of all transaction outputs")
 								if (result.blockstats.total_out)
-									- var currencyValue = new Decimal(result.blockstats.total_out).plus(new Decimal(result.blockstats.totalfee)).plus(new Decimal(result.blockstats.subsidy));
-									- currencyValue = currencyValue.dividedBy(coinConfig.baseCurrencyUnit.multiplier);
+									- var currencyValue = new Decimal(result.blockstats.total_out);
 									+valueDisplay(currencyValue)
 
 								else
@@ -105,7 +104,7 @@ block content
 						+summaryRow(3 + (result.blockstats.feerate_percentiles ? 1 : 0))
 							+summaryItem("Total Fees")
 								if (result.blockstats.totalfee)
-									- var currencyValue = new Decimal(result.blockstats.totalfee).dividedBy(coinConfig.baseCurrencyUnit.multiplier);
+									- var currencyValue = new Decimal(result.blockstats.totalfee);
 									+valueDisplay(currencyValue)
 
 								else
@@ -129,7 +128,7 @@ block content
 
 							+summaryItem("Min / Max Rates", null, "sat/vB")
 								if (result.blockstats.minfeerate || result.blockstats.minfeerate == 0)
-									span #{result.blockstats.minfeerate.toLocaleString()}
+									span #{result.blockstats.minfeerate}
 									
 								else
 									span ?
@@ -137,23 +136,23 @@ block content
 								span.mx-2 -
 
 								if (result.blockstats.maxfeerate)
-									span #{result.blockstats.maxfeerate.toLocaleString()}
+									span #{result.blockstats.maxfeerate}
 									
 								else
 									span ?
 
 							+summaryItem("Min / Max Values")
 								if (result.blockstats.minfee)
-									- var currencyValue = new Decimal(result.blockstats.minfee).dividedBy(coinConfig.baseCurrencyUnit.multiplier);
+									- var currencyValue = new Decimal(result.blockstats.minfee);
 									+valueDisplay(currencyValue)
-
+									
 								else
 									span 0
 
-								br
+								span.mx-2 -
 
 								if (result.blockstats.maxfee)
-									- var currencyValue = new Decimal(result.blockstats.maxfee).dividedBy(coinConfig.baseCurrencyUnit.multiplier);
+									- var currencyValue = new Decimal(result.blockstats.maxfee);
 									+valueDisplay(currencyValue)
 
 								else

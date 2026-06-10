@@ -5,10 +5,10 @@ const Decimal8 = Decimal.clone({ precision:8, rounding:8 });
 
 const zeevFun = require("./zeevFun.js");
 
-const blockRewardEras = [ new Decimal8(950.5) ];
-for (let i = 1; i < 34; i++) {
+const blockRewardEras = [ new Decimal8(16) ];
+for (let i = 1; i < 402; i++) {
 	let previous = blockRewardEras[i - 1];
-	blockRewardEras.push(new Decimal8(previous).dividedBy(2));
+	blockRewardEras.push(new Decimal8(previous).minus(0.05 * i));
 }
 
 const currencyUnits = [
@@ -108,19 +108,19 @@ module.exports = {
 		"https://raw.githubusercontent.com/btccom/Blockchain-Known-Pools/master/pools.json",
 		"https://raw.githubusercontent.com/blockchain/Blockchain-Known-Pools/master/pools.json"
 	],
-	maxBlockWeight: 4000000,
-	maxBlockSize: 1000000,
-	minTxBytes: 166, // ref: https://en.bitcoin.it/wiki/Maximum_transaction_rate
-	minTxWeight: 166 * 4, // hack
+	maxBlockWeight: 8000000,
+	maxBlockSize: 8000000,
+	minTxBytes: 666, // ref: https://en.bitcoin.it/wiki/Maximum_transaction_rate
+	minTxWeight: 666 * 4, // hack
 	difficultyAdjustmentBlockCount: 1,
 	maxSupplyByNetwork: {
-		"main": new Decimal(1000000000), // ref: https://bitcoin.stackexchange.com/a/38998
-		"test": new Decimal(1000000000),
-		"regtest": new Decimal(1000000000),
-		"signet": new Decimal(1000000000)
+		"main": new Decimal(1013000000), // ref: https://bitcoin.stackexchange.com/a/38998
+		"test": new Decimal(1013000000),
+		"regtest": new Decimal(1013000000),
+		"signet": new Decimal(1013000000)
 	},
-	targetBlockTimeSeconds: 30,
-	targetBlockTimeMinutes: 0.5,
+	targetBlockTimeSeconds: 20,
+	targetBlockTimeMinutes: 0.33,
 	currencyUnits:currencyUnits,
 	currencyUnitsByName:{"BTC":currencyUnits[0], "mBTC":currencyUnits[1], "bits":currencyUnits[2], "sat":currencyUnits[3]},
 	baseCurrencyUnit:currencyUnits[3],
@@ -128,17 +128,17 @@ module.exports = {
 	feeSatoshiPerByteBucketMaxima: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 15, 20, 25, 50, 75, 100, 150],
 	
 	halvingBlockIntervalsByNetwork: {
-		"main": 26980,
-		"test": 26980,
-		"regtest": 26980,
-		"signet": 26980
+		"main": 262980,
+		"test": 262980,
+		"regtest": 262980,
+		"signet": 262980
 	},
 
 	terminalHalvingCountByNetwork: {
-		"main": 32,
-		"test": 32,
-		"regtest": 32,
-		"signet": 32
+		"main": 401,
+		"test": 401,
+		"regtest": 401,
+		"signet": 401
 	},
 
 	// used for supply estimates that don't need full gettxoutset accuracy
@@ -569,7 +569,7 @@ module.exports = {
 		}
 	},
 	blockRewardFunction:function(blockHeight, chain) {
-		let halvingBlockInterval = 26980;
+		let halvingBlockInterval = 262980;
 		let index = Math.floor(blockHeight / halvingBlockInterval);
 
 		return blockRewardEras[index];
